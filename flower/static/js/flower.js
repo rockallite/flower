@@ -66,7 +66,8 @@ var flower = (function () {
                 refresh: 1
             },
             success: function (data) {
-                show_success_alert(data.message || 'Refreshed');
+                // show_success_alert(data.message || 'Refreshed');
+                window.location.reload();
             },
             error: function (data) {
                 show_error_alert(data.responseText);
