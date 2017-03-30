@@ -100,14 +100,17 @@ Shut down a worker
 :reqheader Authorization: optional OAuth token to authenticate
 :statuscode 200: no error
 :statuscode 401: unauthorized request
+:statuscode 403: remote shutdown forbidden
 :statuscode 404: unknown worker
         """
         if not self.is_worker(workername):
             raise web.HTTPError(404, "Unknown worker '%s'" % workername)
 
         logger.info("Shutting down '%s' worker", workername)
-        self.capp.control.broadcast('shutdown', destination=[workername])
-        self.write(dict(message="Shutting down!"))
+        # self.capp.control.broadcast('shutdown', destination=[workername])
+        # self.write(dict(message="Shutting down!"))
+        self.set_status(403)
+        self.write("Worker remote shutdown forbidden")
 
 
 class WorkerPoolRestart(ControlHandler):
